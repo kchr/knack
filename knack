@@ -28,20 +28,33 @@ VERBOSE = args.verbose
 ports_failed = []
 
 for TCP_PORT in args.ports:
-    print "[*] Knocking on port %d..." % TCP_PORT
+
+    if VERBOSE:
+        #print "[*] Knocking on port %d..." % TCP_PORT
+        sys.stdout.write("Knocking on port %d...\t" % TCP_PORT)
+        #sys.stdout.write(" " * len(str(TCP_PORT)))
+        sys.stdout.flush()
+
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(TIMEOUT)
         s.connect((TCP_IP, TCP_PORT))
-        s.close()
-    except socket.error, e:
         if VERBOSE:
-            print "[x] FAILED: %s" % str(e)
+            sys.stdout.write("OK")
+        s.close()
+
+    except socket.error, e:
         ports_failed.append(str(TCP_PORT))
+        if VERBOSE:
+            sys.stdout.write("FAILED (%s)" % str(e))
+
+    if VERBOSE:
+        sys.stdout.write("\n")
+        sys.stdout.flush()
 
 
 if len(ports_failed):
-    print "\nFailed ports: %s" % " ".join(ports_failed)
+    print "\nFailed ports: %s" % ", ".join(ports_failed)
     sys.exit(1)
 else:
     sys.exit(0)
