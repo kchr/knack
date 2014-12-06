@@ -26,8 +26,8 @@ Usage
     optional arguments:
       -h, --help            show this help message and exit
       -t TIMEOUT, --timeout TIMEOUT
-                            Timeout for connection attempt (seconds)
-      -v, --verbose         Show detailed information about failed ports
+                            Timeout for connection attempt (seconds), default 30
+      -v, --verbose         Show detailed information
 
 
 A successful operation is silent, unless you supply the verbose flag (this will also show the reason for any failed attempts).
