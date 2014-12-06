@@ -2,6 +2,7 @@
 
 import argparse
 import socket
+import sys
 
 
 parser = argparse.ArgumentParser()
@@ -41,3 +42,6 @@ for TCP_PORT in args.ports:
 
 if len(ports_failed):
     print "\nFailed ports: %s" % " ".join(ports_failed)
+    sys.exit(1)
+else:
+    sys.exit(0)
