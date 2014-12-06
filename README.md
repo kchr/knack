@@ -28,3 +28,8 @@ Usage
       -t TIMEOUT, --timeout TIMEOUT
                             Timeout for connection attempt (seconds)
       -v, --verbose         Show detailed information about failed ports
+
+
+A successful operation is silent, unless you supply the verbose flag (this will also show the reason for any failed attempts).
+
+Return code is 0 for success and 1 for failures.
