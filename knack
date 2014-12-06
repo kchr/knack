@@ -14,7 +14,7 @@ parser.add_argument('ports', metavar='PORT', type=int, nargs='+',
 parser.add_argument('-t', '--timeout', type=int,
                     help='Timeout for connection attempt (seconds), default 30')
 parser.add_argument('-v', '--verbose', action="store_true",
-                    help='Show detailed information about failed ports')
+                    help='Show detailed information')
 
 parser.set_defaults(timeout=30)
 
