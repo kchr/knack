@@ -12,11 +12,11 @@ parser.add_argument('host', metavar='HOST', type=str,
 parser.add_argument('ports', metavar='PORT', type=int, nargs='+',
                     help='Port(s) to use, in order specified')
 parser.add_argument('-t', '--timeout', type=int,
-                    help='Timeout for connection attempt (seconds), default 30')
+                    help='Timeout for connection attempt (seconds), default 10')
 parser.add_argument('-v', '--verbose', action="store_true",
                     help='Show detailed information')
 
-parser.set_defaults(timeout=30)
+parser.set_defaults(timeout=10)
 
 args = parser.parse_args()
 
@@ -30,10 +30,8 @@ ports_failed = []
 for TCP_PORT in args.ports:
 
     if VERBOSE:
-        #print "[*] Knocking on port %d..." % TCP_PORT
         sys.stdout.write("Knocking on port ")
         sys.stdout.write('{0: <10}'.format(str(TCP_PORT) + '...'))
-        #sys.stdout.write(" " * len(str(TCP_PORT)))
         sys.stdout.flush()
 
     sock_msg, sock_ok = None, True
