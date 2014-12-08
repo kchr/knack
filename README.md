@@ -17,6 +17,8 @@ More information:
 
 https://en.wikipedia.org/wiki/Port_knocking
 
+http://www.portknocking.org/view/resources
+
 
 Usage
 -----
