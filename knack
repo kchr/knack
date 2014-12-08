@@ -31,30 +31,43 @@ for TCP_PORT in args.ports:
 
     if VERBOSE:
         #print "[*] Knocking on port %d..." % TCP_PORT
-        sys.stdout.write("Knocking on port %d...\t" % TCP_PORT)
+        sys.stdout.write("Knocking on port ")
+        sys.stdout.write('{0: <10}'.format(str(TCP_PORT) + '...'))
         #sys.stdout.write(" " * len(str(TCP_PORT)))
         sys.stdout.flush()
+
+    sock_msg, sock_ok = None, True
 
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(TIMEOUT)
         s.connect((TCP_IP, TCP_PORT))
-        if VERBOSE:
-            sys.stdout.write("OK")
+        sock_msg = "open"
         s.close()
 
+    # timeouts are knocks, too
+    except socket.timeout, e:
+        sock_msg = "no answer"
+
     except socket.error, e:
-        ports_failed.append(str(TCP_PORT))
-        if VERBOSE:
-            sys.stdout.write("FAILED (%s)" % str(e))
+        ports_failed.append(TCP_PORT)
+        sock_msg = "%s" % e
+        sock_ok = False
 
     if VERBOSE:
+        if sock_ok:
+            sys.stdout.write("OK")
+        else:
+            sys.stdout.write("FAILED")
+        if sock_msg:
+            sys.stdout.write(" (%s)" % sock_msg)
         sys.stdout.write("\n")
         sys.stdout.flush()
 
 
 if len(ports_failed):
-    print "\nFailed ports: %s" % ", ".join(ports_failed)
+    s_ports = ", ".join([str(p) for p in ports_failed])
+    print "\nFailed ports: %s" % s_ports
     sys.exit(1)
 else:
     sys.exit(0)
