@@ -23,7 +23,7 @@ http://www.portknocking.org/view/resources
 Usage
 -----
 
-    $ knack [-h] [-t TIMEOUT] [-v] HOST PORT [PORT ...]
+    $ knack [-h] [-t TIMEOUT] [-v] [-w WAIT] HOST PORT [PORT ...]
     
     positional arguments:
       HOST                  Hostname to knock at
@@ -34,6 +34,7 @@ Usage
       -t TIMEOUT, --timeout TIMEOUT
                             Timeout for connection attempt (seconds), default 10
       -v, --verbose         Show detailed information
+      -w WAIT, --wait WAIT  Time to wait between knocks (seconds), default 1.0
 
 
 A successful operation is silent, unless you supply the verbose flag (this will also show the reason for any failed attempts).
