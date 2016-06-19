@@ -3,6 +3,7 @@
 import argparse
 import socket
 import sys
+import time
 
 
 parser = argparse.ArgumentParser()
@@ -15,8 +16,11 @@ parser.add_argument('-t', '--timeout', type=int,
                     help='Timeout for connection attempt (seconds), default 10')
 parser.add_argument('-v', '--verbose', action="store_true",
                     help='Show detailed information')
+parser.add_argument('-w', '--wait', type=float,
+                    help='Time to wait between knocks (seconds), default 1.0')
 
 parser.set_defaults(timeout=10)
+parser.set_defaults(wait=1.0)
 
 args = parser.parse_args()
 
@@ -24,10 +28,16 @@ args = parser.parse_args()
 TCP_IP = args.host
 TIMEOUT = args.timeout
 VERBOSE = args.verbose
+WAIT = args.wait
 
 ports_failed = []
 
-for TCP_PORT in args.ports:
+if len(args.ports) > 1 and VERBOSE:
+    format_wait = str(WAIT).rstrip('0').rstrip('.')
+    sys.stdout.write("Waiting %ss between each connection attempt\n" % format_wait)
+    sys.stdout.flush()
+
+for i, TCP_PORT in enumerate(args.ports):
 
     if VERBOSE:
         sys.stdout.write("Knocking on port ")
@@ -61,6 +71,9 @@ for TCP_PORT in args.ports:
             sys.stdout.write(" (%s)" % sock_msg)
         sys.stdout.write("\n")
         sys.stdout.flush()
+
+    if i+1 < len(args.ports):
+        time.sleep(WAIT)
 
 
 if len(ports_failed):
